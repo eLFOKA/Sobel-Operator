@@ -29,37 +29,48 @@ struct BITMAPINFOHEADER
 };
 
 //odczytywanie nagłówka 
-void odczytajBFH(ifstream& ifs, BITMAPFILEHEADER& bfh);
-void odczytajBIH(ifstream& ifs, BITMAPINFOHEADER& bih);
+void readBFH(ifstream& ifs, BITMAPFILEHEADER& bfh);
+void readBIH(ifstream& ifs, BITMAPINFOHEADER& bih);
 
 //wypisanie na ekranie nagłówka
-void wypiszBFIH(BITMAPFILEHEADER& bfh, BITMAPINFOHEADER& bih);
+void writeBFIH(BITMAPFILEHEADER& bfh, BITMAPINFOHEADER& bih);
 
 //zapisanie nagłówka
-void zapiszBFH(ofstream& ofs, BITMAPFILEHEADER& bfh);
-void zapiszBIH(ofstream& ofs, BITMAPINFOHEADER& bih);
+void saveBFH(ofstream& ofs, BITMAPFILEHEADER& bfh);
+void saveBIH(ofstream& ofs, BITMAPINFOHEADER& bih);
+
+//Engine
+int engine();
 
 int main() {
+
+    engine();
+
+    return 0;
+}
+
+int engine() {
 
     BITMAPFILEHEADER bfh;
     BITMAPINFOHEADER bih;
 
-    string plik;
-    cout << "Podaj nazwe pliku do odczytu: ";
-    cin >> plik;
-    plik = plik + ".bmp";
+    string inPutFile;
+
+    cout << "Enter the name of the input file: ";
+    cin >> inPutFile;
+    inPutFile = inPutFile + ".bmp";
 
     ifstream ifs;
-    ifs.open(plik, ios::binary | ios::in);
+    ifs.open(inPutFile, ios::binary | ios::in);
 
     if (!ifs) {
-        cout << "BLAD! PLik o podanej nazwie nie istnieje, podaj nazwe jeszcze raz:" << endl;
+        cout << "Error! PLik o podanej nazwie nie istnieje, podaj nazwe jeszcze raz:" << endl;
         system("PAUSE");
         return 0;
     }
 
-    odczytajBFH(ifs, bfh);
-    odczytajBIH(ifs, bih);
+    readBFH(ifs, bfh);
+    readBIH(ifs, bih);
 
     //dynamiczna tablice dwuwymiarowa przed konwersją
     int** tabB = new int* [bih.biHeight];
@@ -88,7 +99,7 @@ int main() {
     }
     ifs.close();
 
-    wypiszBFIH(bfh, bih);
+    writeBFIH(bfh, bih);
 
     //dynamiczna tablice trójwymarowe przechowujące wyniki operacji sobela
     int*** sobel_tabB = new int** [8];
@@ -112,8 +123,8 @@ int main() {
             sobel_tabR[i][j] = new int[bih.biWidth - 2];
     }
 
-    //Tablica Masek
-    int maska[8][3][3] = { { { -1, 0, 1 } , { -2, 0, 2 } , { -1, 0, 1 } },
+    //Table of Masks 
+    int mask[8][3][3] = { { { -1, 0, 1 } , { -2, 0, 2 } , { -1, 0, 1 } },
                                                     { {0, 1, 2} , { -1, 0, 1} , { -2, -1, 0} } ,
                                                     { { 1, 2, 1} , { 0, 0, 0} , { -1, -2, -1} } ,
                                                     { { +2, +1, 0} , { +1, 0, -1} , { 0, -1, -2} } ,
@@ -129,15 +140,15 @@ int main() {
             for (int j = 0; j < bih.biWidth - 2; ++j) {
 
                 // nowe powinno dzialać
-                sobel_tabB[k][i][j] = maska[k][0][0] * tabB[i][j] +
-                    maska[k][1][0] * tabB[i + 1][j] +
-                    maska[k][2][0] * tabB[i + 2][j] +
-                    maska[k][0][1] * tabB[i][j + 1] +
-                    maska[k][1][1] * tabB[i + 1][j + 1] +
-                    maska[k][2][1] * tabB[i + 2][j + 1] +
-                    maska[k][0][2] * tabB[i][j + 2] +
-                    maska[k][1][2] * tabB[i + 1][j + 2] +
-                    maska[k][2][2] * tabB[i + 2][j + 2];
+                sobel_tabB[k][i][j] = mask[k][0][0] * tabB[i][j] +
+                    mask[k][1][0] * tabB[i + 1][j] +
+                    mask[k][2][0] * tabB[i + 2][j] +
+                    mask[k][0][1] * tabB[i][j + 1] +
+                    mask[k][1][1] * tabB[i + 1][j + 1] +
+                    mask[k][2][1] * tabB[i + 2][j + 1] +
+                    mask[k][0][2] * tabB[i][j + 2] +
+                    mask[k][1][2] * tabB[i + 1][j + 2] +
+                    mask[k][2][2] * tabB[i + 2][j + 2];
 
                 if (sobel_tabB[k][i][j] > 255) {
                     sobel_tabB[k][i][j] = 255;
@@ -146,15 +157,15 @@ int main() {
                     sobel_tabB[k][i][j] = 0;
                 }
 
-                sobel_tabG[k][i][j] = maska[k][0][0] * tabG[i][j] +
-                    maska[k][1][0] * tabG[i + 1][j] +
-                    maska[k][2][0] * tabG[i + 2][j] +
-                    maska[k][0][1] * tabG[i][j + 1] +
-                    maska[k][1][1] * tabG[i + 1][j + 1] +
-                    maska[k][2][1] * tabG[i + 2][j + 1] +
-                    maska[k][0][2] * tabG[i][j + 2] +
-                    maska[k][1][2] * tabG[i + 1][j + 2] +
-                    maska[k][2][2] * tabG[i + 2][j + 2];
+                sobel_tabG[k][i][j] = mask[k][0][0] * tabG[i][j] +
+                    mask[k][1][0] * tabG[i + 1][j] +
+                    mask[k][2][0] * tabG[i + 2][j] +
+                    mask[k][0][1] * tabG[i][j + 1] +
+                    mask[k][1][1] * tabG[i + 1][j + 1] +
+                    mask[k][2][1] * tabG[i + 2][j + 1] +
+                    mask[k][0][2] * tabG[i][j + 2] +
+                    mask[k][1][2] * tabG[i + 1][j + 2] +
+                    mask[k][2][2] * tabG[i + 2][j + 2];
 
                 if (sobel_tabG[k][i][j] > 255) {
                     sobel_tabG[k][i][j] = 255;
@@ -163,15 +174,15 @@ int main() {
                     sobel_tabG[k][i][j] = 0;
                 }
 
-                sobel_tabR[k][i][j] = maska[k][0][0] * tabR[i][j] +
-                    maska[k][1][0] * tabR[i + 1][j] +
-                    maska[k][2][0] * tabR[i + 2][j] +
-                    maska[k][0][1] * tabR[i][j + 1] +
-                    maska[k][1][1] * tabR[i + 1][j + 1] +
-                    maska[k][2][1] * tabR[i + 2][j + 1] +
-                    maska[k][0][2] * tabR[i][j + 2] +
-                    maska[k][1][2] * tabR[i + 1][j + 2] +
-                    maska[k][2][2] * tabR[i + 2][j + 2];
+                sobel_tabR[k][i][j] = mask[k][0][0] * tabR[i][j] +
+                    mask[k][1][0] * tabR[i + 1][j] +
+                    mask[k][2][0] * tabR[i + 2][j] +
+                    mask[k][0][1] * tabR[i][j + 1] +
+                    mask[k][1][1] * tabR[i + 1][j + 1] +
+                    mask[k][2][1] * tabR[i + 2][j + 1] +
+                    mask[k][0][2] * tabR[i][j + 2] +
+                    mask[k][1][2] * tabR[i + 1][j + 2] +
+                    mask[k][2][2] * tabR[i + 2][j + 2];
 
                 if (sobel_tabR[k][i][j] > 255) {
                     sobel_tabR[k][i][j] = 255;
@@ -182,9 +193,10 @@ int main() {
 
             }
         }
+        cout << "progress: " << double((k + 1) * 12.5) << '%'<< endl;
     }
 
-    //usuwanie wczytanego obrazu
+    //deleting loaded image
     for (int i = 0; i < bih.biHeight; ++i) {
         delete[] tabB[i];
     }
@@ -200,7 +212,7 @@ int main() {
     }
     delete[] tabR;
 
-    //dynamiczna tablice dwuwymiarowa dla nowego obrazu
+    //dynamic 2D arrays for a new image
     int** new_tabB = new int* [bih.biHeight];
     for (int i = 0; i < bih.biHeight; ++i)
         new_tabB[i] = new int[bih.biWidth];
@@ -213,30 +225,7 @@ int main() {
     for (int i = 0; i < bih.biHeight; ++i)
         new_tabR[i] = new int[bih.biWidth];
 
-    //czarne granice obrazu utworzonego
-    for (int i = 0; i < bih.biWidth; i++) {
-        new_tabB[0][i] = 0;
-        new_tabB[bih.biHeight - 1][i] = 0;
-
-        new_tabG[0][i] = 0;
-        new_tabG[bih.biHeight - 1][i] = 0;
-
-        new_tabR[0][i] = 0;
-        new_tabR[bih.biHeight - 1][i] = 0;
-    }
-
-    for (int i = 0; i < bih.biHeight; i++) {
-        new_tabB[i][0] = 0;
-        new_tabB[i][bih.biWidth - 1] = 0;
-
-        new_tabG[i][0] = 0;
-        new_tabG[i][bih.biWidth - 1] = 0;
-
-        new_tabR[i][0] = 0;
-        new_tabR[i][bih.biWidth - 1] = 0;
-    }
-
-    //tworzenie nowego obrazu z otrzymanych pikseli po operacji sobela
+    //creating new image from received pixels after sobel operation
     int tmp1 = 0;
     int tmp2 = 0;
     int tmp3 = 0;
@@ -263,7 +252,7 @@ int main() {
         }
     }
 
-    //usuwanie tablic sobela
+    //deleting dynamic tables used by sobel operator
     for (int i = 0; i < 8; i++)
     {
         for (int j = 0; j < bih.biHeight - 2; j++)
@@ -288,16 +277,16 @@ int main() {
     }
     delete[] sobel_tabR;
 
-    string plik1;
-    cout << "Podaj nazwe pliku do zapisu: ";
-    cin >> plik1;
-    plik1 = plik1 + ".bmp";
+    string outPutFile;
+    cout << "Enter the name of the output file: ";
+    cin >> outPutFile;
+    outPutFile = outPutFile + ".bmp";
 
     ofstream ofs;
-    ofs.open(plik1, ios::binary | ios::out | ios::trunc);
+    ofs.open(outPutFile, ios::binary | ios::out | ios::trunc);
 
-    zapiszBFH(ofs, bfh);
-    zapiszBIH(ofs, bih);
+    saveBFH(ofs, bfh);
+    saveBIH(ofs, bih);
 
     //wczytywanie pikseli do nowego obrazu
     int tabTmp1 = 0;
@@ -314,7 +303,7 @@ int main() {
     }
     ofs.close();
 
-    //usuwanie wczytanego obrazu
+    //deleting loaded inPutFile
     for (int i = 0; i < bih.biHeight; ++i) {
         delete[] new_tabB[i];
     }
@@ -330,10 +319,9 @@ int main() {
     }
     delete[] new_tabR;
 
-    return 0;
 }
 
-void odczytajBFH(ifstream& ifs, BITMAPFILEHEADER& bfh) {
+void readBFH(ifstream& ifs, BITMAPFILEHEADER& bfh) {
     ifs.read(reinterpret_cast<char*>(&bfh.bfType), 2);
     ifs.read(reinterpret_cast<char*>(&bfh.bfSize), 4);
     ifs.read(reinterpret_cast<char*>(&bfh.bfReserved1), 2);
@@ -341,7 +329,7 @@ void odczytajBFH(ifstream& ifs, BITMAPFILEHEADER& bfh) {
     ifs.read(reinterpret_cast<char*>(&bfh.bfoffBits), 4);
 }
 
-void odczytajBIH(ifstream& ifs, BITMAPINFOHEADER& bih) {
+void readBIH(ifstream& ifs, BITMAPINFOHEADER& bih) {
     ifs.read(reinterpret_cast<char*>(&bih.biSize), 4);
     ifs.read(reinterpret_cast<char*>(&bih.biWidth), 4);
     ifs.read(reinterpret_cast<char*>(&bih.biHeight), 4);
@@ -355,8 +343,7 @@ void odczytajBIH(ifstream& ifs, BITMAPINFOHEADER& bih) {
     ifs.read(reinterpret_cast<char*>(&bih.biCrlImport), 4);
 }
 
-
-void wypiszBFIH(BITMAPFILEHEADER& bfh, BITMAPINFOHEADER& bih) {
+void writeBFIH(BITMAPFILEHEADER& bfh, BITMAPINFOHEADER& bih) {
 
     cout << "bfType = " << bfh.bfType << endl;
     cout << "bfSize = " << bfh.bfSize << endl;
@@ -378,7 +365,7 @@ void wypiszBFIH(BITMAPFILEHEADER& bfh, BITMAPINFOHEADER& bih) {
 
 }
 
-void zapiszBFH(ofstream& ofs, BITMAPFILEHEADER& bfh) {
+void saveBFH(ofstream& ofs, BITMAPFILEHEADER& bfh) {
     ofs.write(reinterpret_cast<char*>(&bfh.bfType), 2);
     ofs.write(reinterpret_cast<char*>(&bfh.bfSize), 4);
     ofs.write(reinterpret_cast<char*>(&bfh.bfReserved1), 2);
@@ -387,8 +374,7 @@ void zapiszBFH(ofstream& ofs, BITMAPFILEHEADER& bfh) {
 
 }
 
-
-void zapiszBIH(ofstream& ofs, BITMAPINFOHEADER& bih) {
+void saveBIH(ofstream& ofs, BITMAPINFOHEADER& bih) {
     ofs.write(reinterpret_cast<char*>(&bih.biSize), 4);
     ofs.write(reinterpret_cast<char*>(&bih.biWidth), 4);
     ofs.write(reinterpret_cast<char*>(&bih.biHeight), 4);

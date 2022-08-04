@@ -1,0 +1,3 @@
+﻿  Sobel Operator.cpp
+C:\Users\lenovo\Documents\GitHub\Sobel-Operator\Sobel Operator\Sobel Operator.cpp(324): warning C4715: "engine”: niewszystkie ścieżki kodu zwracają wartość
+  Sobel Operator.vcxproj -> C:\Users\lenovo\Documents\GitHub\Sobel-Operator\x64\Debug\Sobel Operator.exe
