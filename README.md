@@ -19,8 +19,6 @@ Here some examples
 
 ![meAfter](https://user-images.githubusercontent.com/83663917/183086050-96e13aa7-8af8-430c-8bbe-1c9e3845a860.jpg)
 
-![tigerBefore](https://user-images.githubusercontent.com/83663917/183086089-bd6c1f65-bb4f-49f8-b802-a31194503e88.jpg) 
-
 <img src="https://user-images.githubusercontent.com/83663917/183086084-dfb536da-f2fe-4325-82be-df6d6f63609b.jpg" allign=left>
 
-![tigerAfter](https://user-images.githubusercontent.com/83663917/183086084-dfb536da-f2fe-4325-82be-df6d6f63609b.jpg)
+<img src="https://user-images.githubusercontent.com/83663917/183086084-dfb536da-f2fe-4325-82be-df6d6f63609b.jpg" allign=right>
