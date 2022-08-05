@@ -33,7 +33,7 @@ Please remember that the current version is alpha, so using it makes seem a litt
 </div>
 <div>
   <h2>The future of the program</h2>
-  <p>For now, the program is very raw, and far from a smooth user experience. Over time I would like to change it and maybe release it as a working tool, for who? I don't know, will figure it out later. Plans are that in some time the program will be capable of finding edges in short videos. If you like my work and it truly brought a smile to your face to you let me know!</p>
+  <p>For now, the program is in very raw, and far from a smooth user experience. Over time I would like to change it and maybe release it as a working tool, for who? I don't know, will figure it out later. Plans are that in some time the program will be capable of finding edges in short videos. If you like my work and it truly brought a smile to your face to you let me know!</p>
   <p>Have a great time,
     fat_seal</p>
 </div>
