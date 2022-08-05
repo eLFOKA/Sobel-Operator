@@ -13,7 +13,7 @@ Here some examples
 
 ![cityBefore](https://user-images.githubusercontent.com/83663917/183085896-d337804f-5c2b-4aae-b1b6-28132d92aa3d.jpg)
 
-![cityAfter](https://user-images.githubusercontent.com/83663917/183085971-b535bbdb-e6f2-4bd6-b749-131ffb5da09a.jpg
+![cityAfter](https://user-images.githubusercontent.com/83663917/183085971-b535bbdb-e6f2-4bd6-b749-131ffb5da09a.jpg)
 
 ![meBefore](https://user-images.githubusercontent.com/83663917/183086032-c001c59f-d692-4514-8527-09b6b35b9826.jpg)
 
