@@ -11,4 +11,4 @@ This program give to the user chance of playing with their images by exaggeratin
 
 Here some examples 
 
-![tiger!](/images/tiger.jpg "tiger")
+![tiger!](/images/tiger.jpg "tigerAfter")
