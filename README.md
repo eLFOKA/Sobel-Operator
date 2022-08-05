@@ -1,10 +1,7 @@
 # Sobel-Operator
 
 <h2> Program purpose </h2>
-Its simple, the program was made for my University. Some time passed and i realized that this code has potencial to bring smile on some faces, when they see their images converted by it. 
-
-and to be honest...
-I'm looking for some job in IT, and it seems to me that this kind of project will bring me closer to it.
+It's simple, the program was made for my University. Time passed and i realized that this code has potencial to bring smile on some faces, when they see their images converted by it. 
 
 <h2> What program does </h2>
 This program give to the user chance of playing with their images by exaggerating all edges. It looks cool and whole process takes a few seconds. 
@@ -34,3 +31,10 @@ Please remember that the current version is alpha, so using it makes seem a litt
   <li>Enjoy your converted bitmap!</li>
 </ol>
 </div>
+<div>
+  <h2>The future of the program</h2>
+  <p>For now, the program is very raw, and far from a smooth user experience. Over time I would like to change it and maybe release it as a working tool, for who? I don't know, will figure it out later. Plans are that in some time the program will be capable of finding edges in short videos. If you like my work and it truly brought a smile to your face to you let me know!</p>
+  <p>Have a great time,
+    fat_seal</p>
+</div>
+
