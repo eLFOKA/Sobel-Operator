@@ -24,8 +24,8 @@ Please remember that the current version is alpha, so using it makes seem a litt
 <ol>
   <li>Download all files</li>
   <li>Convert your image type from .png/.jpeg/.jpg to 24-bit map (.bmp)<p>I strongly suggest using for it Paint. You ask why? Because for now it is only known     for me option that works. I tried other converters on the internet but it seems that they do not work properly with the current version of the program. Simple Open     image in Paint and save it as 24-bit bitmap</p></li>
-  <li>Take your converted bitmap and put it in "Sobel Operator" Folder (the folder also contains .cpp file)</li>
-  <li>Run Program by opening the "x64" folder, then "Debug" and click on "Sobel Operator.exe"</li>
+  <li>Take your converted bitmap and put it in "x64" folder, then "Debug" Folder (the folder also contains .exe file)</li>
+  <li>Run Program by clicking on "Sobel Operator.exe" in "Debug" folder</li>
   <li>Console window will pop up with instructions for you on what to do next</li>
   <li>After successful operation of the program, your converted image will appear in the same file where you put the original bitmap</li>
   <li>Enjoy your converted bitmap!</li>
